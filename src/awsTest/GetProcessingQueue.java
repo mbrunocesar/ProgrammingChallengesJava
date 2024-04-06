@@ -25,22 +25,22 @@ class GetProcessingQueue {
 
     public static List<Integer> findRequestsInQueue(List<Integer> wait) {
         List<Integer> processedList = new LinkedList<Integer>();
-        
+
         int time = 0;
         int waitSize = wait.size();
         processedList.add(waitSize);
             
         while (waitSize > 0) {
             time++;
-            wait.remove(0);
+            wait.removeFirst();
 
-            waitSize = wait.size();
-            for (int i = waitSize - 1; i >= 0; i--) {
-                int current = wait.get(i);
-                if (current <= time) {
-                    wait.remove(i);
+            List<Integer> removalList = new LinkedList<Integer>();
+            for (int element : wait) {
+                if (element <= time) {
+                    removalList.add(element);
                 }
             }
+            wait.removeAll(removalList);
             
             waitSize = wait.size();
             processedList.add(waitSize);
